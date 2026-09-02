@@ -27,8 +27,10 @@
   --ui:"Karla",system-ui,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overscroll-behavior-y:none}
 body{
+  overscroll-behavior-y:none;
+  touch-action:manipulation;
   font-family:var(--ui);
   background:var(--paper);
   color:var(--body);
@@ -41,14 +43,16 @@ body{
 }
 
 /* ---------- shell ---------- */
-.shell{display:flex;min-height:100vh}
+.shell{display:flex;min-height:100vh;max-width:1150px;margin:0 auto;padding:20px 20px 0;gap:26px}
 .side{
   display:flex;flex-direction:column;
   width:264px;flex-shrink:0;
   background:var(--ink);
   color:#d8d2e2;
   padding:34px 0 28px;
-  position:sticky;top:0;height:100vh;overflow-y:auto;
+  position:sticky;top:20px;height:calc(100vh - 40px);overflow-y:auto;
+  border-radius:16px;
+  box-shadow:0 18px 44px rgba(38,33,51,.16);
 }
 .side::-webkit-scrollbar{width:0}
 .brand{padding:0 28px 22px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -85,7 +89,7 @@ body{
 /* mobile tab strip */
 .mbar{display:none}
 @media (max-width:880px){
-  .shell{display:block}
+  .shell{display:block;max-width:none;padding:0;gap:0}
   .side{display:none}
   .mbar{
     display:block;position:sticky;top:0;z-index:40;
@@ -124,7 +128,7 @@ body{
 
 /* ---------- main column ---------- */
 .main{flex:1;min-width:0}
-.wrap{max-width:760px;margin:0 auto;padding:52px 34px 90px}
+.wrap{max-width:740px;margin:0 auto;padding:40px 34px 90px}
 @media (max-width:880px){.wrap{padding:30px 20px 70px}}
 .view{display:none}
 .view.on{display:block;animation:vin .35s ease}
@@ -323,6 +327,15 @@ details.acc.script > .acc-body{padding:4px 19px 18px}
 .suds-nums button:hover{border-color:var(--gold)}
 .suds-nums button.sel{background:var(--ink);border-color:var(--ink);color:#fff}
 .suds-delta{font-size:14px;color:var(--euca);font-weight:600;margin-top:10px;min-height:18px}
+.pacer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+.pacer .psmall{padding:8px 15px;font-size:13.5px}
+.pchip{
+  border:1.3px solid var(--line);background:#fff;border-radius:20px;
+  padding:6px 13px;font-size:12.5px;font-weight:600;color:var(--ink);
+  cursor:pointer;font-family:var(--ui);transition:border-color .12s;
+}
+.pchip:hover{border-color:var(--gold)}
+.plabel{font-size:12.5px;color:var(--muted)}
 /* ---------- misc ---------- */
 .next-call{
   display:flex;gap:16px;align-items:center;
@@ -343,7 +356,7 @@ details.acc.script > .acc-body{padding:4px 19px 18px}
 <div class="mbar">
   <div class="mtitle">Megan's Portal <span>VIP · SEPTEMBER</span></div>
   <div class="mdd">
-    <button class="mdd-btn" id="mdd-btn" aria-haspopup="listbox" aria-expanded="false">
+    <button type="button" class="mdd-btn" id="mdd-btn" aria-haspopup="listbox" aria-expanded="false">
       <span class="mdd-g" id="mdd-g">✦</span><span id="mdd-label">Welcome</span><span class="mdd-caret">▾</span>
     </button>
     <div class="mdd-list" id="mdd-list" role="listbox"></div>
@@ -531,9 +544,9 @@ details.acc.script > .acc-body{padding:4px 19px 18px}
     <p class="b">Type a yes or no question, say it out loud, and log the sound your body made before your mind got a vote. Uh-huh, uh-uh, or nothing at all.</p>
     <input class="qin" id="sac-q" placeholder="Do I want to work on this today?">
     <div class="btnrow">
-      <button class="btn sageb" id="sac-yes">Uh-huh · yes</button>
-      <button class="btn roseb" id="sac-no">Uh-uh · no</button>
-      <button class="btn ghost" id="sac-flat">Nothing there</button>
+      <button type="button" class="btn sageb" id="sac-yes">Uh-huh · yes</button>
+      <button type="button" class="btn roseb" id="sac-no">Uh-uh · no</button>
+      <button type="button" class="btn ghost" id="sac-flat">Nothing there</button>
     </div>
     <div class="loglist" id="sac-log"><div class="empty">No questions logged yet. The first one is the strangest, then it becomes second nature.</div></div>
   </div>
@@ -542,11 +555,11 @@ details.acc.script > .acc-body{padding:4px 19px 18px}
   <div class="panel">
     <p class="b">One tap. Over the weeks this becomes a map of your wave, and the rule stays simple: no big yeses and no self-verdicts below steady.</p>
     <div class="wavegrid">
-      <button data-wave="High" ><span>☀</span>High</button>
-      <button data-wave="Rising"><span>◠</span>Rising</button>
-      <button data-wave="Steady"><span>─</span>Steady</button>
-      <button data-wave="Sinking"><span>◡</span>Sinking</button>
-      <button data-wave="Deep"><span>☾</span>Deep low</button>
+      <button type="button" data-wave="High" ><span>☀</span>High</button>
+      <button type="button" data-wave="Rising"><span>◠</span>Rising</button>
+      <button type="button" data-wave="Steady"><span>─</span>Steady</button>
+      <button type="button" data-wave="Sinking"><span>◡</span>Sinking</button>
+      <button type="button" data-wave="Deep"><span>☾</span>Deep low</button>
     </div>
     <div class="loglist" id="wave-log"><div class="empty">No check ins yet.</div></div>
   </div>
@@ -559,7 +572,7 @@ details.acc.script > .acc-body{padding:4px 19px 18px}
   <p class="lede">Your open Head catches ideas all day long. Your authority needs time to know which ones are actually yours. So we split the two jobs. Log the idea the second it lands, then leave it alone. Each idea rests for two days before the portal will even let you decide on it. When you come back, feel into it again. Still lights you up? It's real. Gone flat? It was never yours to carry, and you can let it go without guilt.</p>
   <div class="panel">
     <input class="qin" id="idea-in" placeholder="A program idea, a post, a collab, anything...">
-    <div class="btnrow"><button class="btn goldb" id="idea-add">Catch it</button></div>
+    <div class="btnrow"><button type="button" class="btn goldb" id="idea-add">Catch it</button></div>
     <div class="loglist" id="idea-log"><div class="empty">Nothing caught yet. The next idea that flies past goes here instead of around your head at 2am.</div></div>
   </div>
 </section>
@@ -570,25 +583,27 @@ details.acc.script > .acc-body{padding:4px 19px 18px}
   <h2 class="title">Tapping <em>scripts.</em></h2>
   <p class="lede">Written from your chart and your own words. You're the practitioner here, so change any line that doesn't sound like you. Open a script, rate how strong the feeling is before you start, tap through the rounds, then rate it again. Start each script with the setup on the karate chop point, said three times.</p>
 
-  <details class="acc script">
+  <details class="acc script" id="script-s1">
     <summary><span class="ag">✦</span>Script one: for your design<span class="caret">›</span></summary>
     <div class="acc-body">
       <p class="b">For the days the old pressure shows up. The pressure to push, to know right now, to get it all done because that's who you've always been.</p>
       <div class="suds" data-s="s1" data-pos="before"><div class="suds-l">Before you tap: how strong is the pressure right now? 0 is nothing, 10 is a lot.</div><div class="suds-nums"></div></div>
+      <div class="pacer" data-s="s1"><button type="button" class="btn goldb psmall pace-toggle">▶ Start guided pace</button><button type="button" class="pchip pace-slower">− slower</button><button type="button" class="pchip pace-faster">+ faster</button><span class="plabel"></span></div>
       <div class="setupline"><b>SETUP · KARATE CHOP · SAY 3 TIMES</b>Even though everyone knows me as the one who gets things done, I give myself full permission to work the way I'm actually built.</div>
-      <details class="acc" open><summary><span class="ag">1</span>Round one: naming it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Don't rush to fix anything yet. As you tap, let yourself really feel the pressure you carry and notice where it sits, your chest, your shoulders, your jaw. Saying it out loud while feeling it is the whole point of this round.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">All this pressure to push through</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">Everyone expects me to just get on with it</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I expect me to just get on with it</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">But my energy won't come on command</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">And forcing it just leaves me frustrated</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">All this pressure to have it figured out</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">All this pressure to know right now</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">All this pressure</span></div></div></details><details class="acc"><summary><span class="ag">2</span>Round two: the truth of how I work<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Shift from the pressure to the truth. Say these lines slowly and feel for the part of you that recognizes them. If your breath deepens or your shoulders drop, that's your body agreeing. Let it.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">My energy rises when something is right for me</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">And goes quiet when it's not</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">That quiet is not laziness</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">It's my body telling me the truth</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">My clarity arrives in its own time</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">I don't have to decide at the top of the wave</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I don't have to decide at the bottom either</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">I can let the answer come to me over days</span></div></div></details><details class="acc"><summary><span class="ag">3</span>Round three: choosing it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Say these like decisions, not hopes. Sit tall, breathe into your belly, and let each line land in your body before you move to the next point. You're not wishing here. You're choosing.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I choose to wait for my real yes</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">And I trust it when it comes</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I'm allowed to test things before they're final</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">Nothing I try is ever wasted</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">I learn by living it, that's my gift</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">My timing is not everyone's timing</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">And mine has never let me down when I honored it</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">I work the way I'm built, and it works</span></div></div></details>
+      <details class="acc" open><summary><span class="ag">1</span>Round one: naming it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Don't rush to fix anything yet. As you tap, let yourself really feel the pressure you carry and notice where it sits, your chest, your shoulders, your jaw. Saying it out loud while feeling it is the whole point of this round.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">All this pressure to push through</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">Everyone expects me to just get on with it</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I expect me to just get on with it</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">But my energy won't come on command</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">And forcing it just leaves me frustrated</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">All this pressure to have it figured out</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">All this pressure to know right now</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">All this pressure</span></div></div></details><details class="acc" open><summary><span class="ag">2</span>Round two: the truth of how I work<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Shift from the pressure to the truth. Say these lines slowly and feel for the part of you that recognizes them. If your breath deepens or your shoulders drop, that's your body agreeing. Let it.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">My energy rises when something is right for me</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">And goes quiet when it's not</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">That quiet is not laziness</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">It's my body telling me the truth</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">My clarity arrives in its own time</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">I don't have to decide at the top of the wave</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I don't have to decide at the bottom either</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">I can let the answer come to me over days</span></div></div></details><details class="acc" open><summary><span class="ag">3</span>Round three: choosing it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Say these like decisions, not hopes. Sit tall, breathe into your belly, and let each line land in your body before you move to the next point. You're not wishing here. You're choosing.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I choose to wait for my real yes</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">And I trust it when it comes</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I'm allowed to test things before they're final</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">Nothing I try is ever wasted</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">I learn by living it, that's my gift</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">My timing is not everyone's timing</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">And mine has never let me down when I honored it</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">I work the way I'm built, and it works</span></div></div></details>
       <div class="suds" data-s="s1" data-pos="after"><div class="suds-l">Now take a slow breath and check again. Where is it now?</div><div class="suds-nums"></div></div>
       <div class="suds-delta" data-s="s1"></div>
     </div>
   </details>
 
-  <details class="acc script">
+  <details class="acc script" id="script-s2">
     <summary><span class="ag">✦</span>Script two: for the stall<span class="caret">›</span></summary>
     <div class="acc-body">
       <p class="b">For right now. Written from your own words, so tap through it exactly as you'd say it.</p>
       <div class="suds" data-s="s2" data-pos="before"><div class="suds-l">Before you tap: how heavy does the stuck feeling sit right now? 0 is nothing, 10 is a lot.</div><div class="suds-nums"></div></div>
+      <div class="pacer" data-s="s2"><button type="button" class="btn goldb psmall pace-toggle">▶ Start guided pace</button><button type="button" class="pchip pace-slower">− slower</button><button type="button" class="pchip pace-faster">+ faster</button><span class="plabel"></span></div>
       <div class="setupline"><b>SETUP · KARATE CHOP · SAY 3 TIMES</b>Even though I feel stalled and stuck and I have no idea why, I deeply and completely accept myself anyway.</div>
-      <details class="acc" open><summary><span class="ag">1</span>Round one: naming it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Feel into what you're actually going through. Let the stuck feeling be fully there while you tap, don't talk yourself out of it or soften it yet. If emotion rises, good. Keep tapping and let it move through.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">This stuck feeling</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I don't understand it</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">This is so not like me</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I'm always the one who gets things done</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">And now I can't seem to start</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">Part of me worries something is wrong with me</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">All this frustration</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">This stall I can't explain</span></div></div></details><details class="acc"><summary><span class="ag">2</span>Round two: softening<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>You're not forcing positivity here, just opening a little room for maybe. Say each line and notice any small relief, a longer breath, a softer chest, less grip in your belly. That small relief is the work working.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">Maybe this stall is not a failure</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">Maybe my body is telling me something</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">Maybe it never said yes to this version of the plan</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I don't have to figure out the why today</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">I don't have to push through to prove anything</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">Twenty years of getting things done doesn't disappear</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I'm still that woman</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">I'm just finally listening</span></div></div></details><details class="acc"><summary><span class="ag">3</span>Round three: choosing<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Feel the truth of who you are underneath the stall. Slow right down. Say each line, then pause and let it settle in your body before the next point. If one line feels especially true, stay on that point and repeat it.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I'm open to doing this differently</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I'm open to my yes finding me</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">The right next step can be small</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">My voice is ready when I am</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">I release the pressure to have it all done</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">I choose one true thing over three forced things</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I trust what comes through me</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">And I let the rest wait</span></div></div></details>
+      <details class="acc" open><summary><span class="ag">1</span>Round one: naming it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Feel into what you're actually going through. Let the stuck feeling be fully there while you tap, don't talk yourself out of it or soften it yet. If emotion rises, good. Keep tapping and let it move through.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">This stuck feeling</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I don't understand it</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">This is so not like me</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I'm always the one who gets things done</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">And now I can't seem to start</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">Part of me worries something is wrong with me</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">All this frustration</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">This stall I can't explain</span></div></div></details><details class="acc" open><summary><span class="ag">2</span>Round two: softening<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>You're not forcing positivity here, just opening a little room for maybe. Say each line and notice any small relief, a longer breath, a softer chest, less grip in your belly. That small relief is the work working.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">Maybe this stall is not a failure</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">Maybe my body is telling me something</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">Maybe it never said yes to this version of the plan</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I don't have to figure out the why today</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">I don't have to push through to prove anything</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">Twenty years of getting things done doesn't disappear</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I'm still that woman</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">I'm just finally listening</span></div></div></details><details class="acc" open><summary><span class="ag">3</span>Round three: choosing<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Feel the truth of who you are underneath the stall. Slow right down. Say each line, then pause and let it settle in your body before the next point. If one line feels especially true, stay on that point and repeat it.</div><div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I'm open to doing this differently</span></div><div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I'm open to my yes finding me</span></div><div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">The right next step can be small</span></div><div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">My voice is ready when I am</span></div><div class="tapline"><span class="pt">CHIN</span><span class="tx">I release the pressure to have it all done</span></div><div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">I choose one true thing over three forced things</span></div><div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I trust what comes through me</span></div><div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">And I let the rest wait</span></div></div></details>
       <div class="suds" data-s="s2" data-pos="after"><div class="suds-l">Now take a slow breath and check again. Where is it now?</div><div class="suds-nums"></div></div>
       <div class="suds-delta" data-s="s2"></div>
     </div>
@@ -607,7 +622,7 @@ details.acc.script > .acc-body{padding:4px 19px 18px}
   <p class="lede">Your open Head will forget every win by Friday, so we keep the evidence here. Anything counts: a recording made, a rest actually taken, a clean no, a flat sound honored instead of overridden.</p>
   <div class="panel">
     <input class="qin" id="win-in" placeholder="What happened?">
-    <div class="btnrow"><button class="btn goldb" id="win-add">Add it to the ledger</button></div>
+    <div class="btnrow"><button type="button" class="btn goldb" id="win-add">Add it to the ledger</button></div>
     <div class="loglist" id="win-log"><div class="empty">Empty for now. It will not stay that way.</div></div>
   </div>
   <div class="footer">
@@ -675,11 +690,13 @@ function go(id){
 }
 VIEWS.forEach(v=>{
   const b=document.createElement("button");
+  b.type="button";
   b.dataset.v=v.id;
   b.innerHTML='<span class="g">'+v.g+'</span>'+v.label+'<span class="tick" id="tick-'+v.id+'">✓</span>';
   b.addEventListener("click",()=>go(v.id));
   navEl.appendChild(b);
   const mb=document.createElement("button");
+  mb.type="button";
   mb.dataset.v=v.id;
   mb.innerHTML='<span class="g">'+v.g+'</span>'+v.label;
   mb.setAttribute("role","option");
@@ -774,13 +791,13 @@ function renderIdeas(){
     wrap.className="idea"+(i.st==="release"?" released":"");
     let meta='<span>caught '+(days===0?"today":days===1?"yesterday":days+" days ago")+'</span>';
     if(i.st==="keep"){
-      meta+='<span class="ibadge keep">✶ still a yes</span><button class="ibtn undo" data-a="undo" data-i="'+ix+'">undo</button>';
+      meta+='<span class="ibadge keep">✶ still a yes</span><button type="button" class="ibtn undo" data-a="undo" data-i="'+ix+'">undo</button>';
     }else if(i.st==="release"){
-      meta+='<span class="ibadge" style="color:var(--muted)">released</span><button class="ibtn undo" data-a="undo" data-i="'+ix+'">undo</button>';
+      meta+='<span class="ibadge" style="color:var(--muted)">released</span><button type="button" class="ibtn undo" data-a="undo" data-i="'+ix+'">undo</button>';
     }else if(days<2){
       meta+='<span class="ibadge rest">resting · feel into it '+(days===0?"in 2 days":"tomorrow")+'</span>';
     }else{
-      meta+='<button class="ibtn" data-a="keep" data-i="'+ix+'">Still lights me up</button><button class="ibtn" data-a="release" data-i="'+ix+'">Gone flat</button>';
+      meta+='<button type="button" class="ibtn" data-a="keep" data-i="'+ix+'">Still lights me up</button><button type="button" class="ibtn" data-a="release" data-i="'+ix+'">Gone flat</button>';
     }
     wrap.innerHTML='<div class="it">'+esc(i.t)+'</div><div class="imeta">'+meta+'</div>';
     el.appendChild(wrap);
@@ -842,6 +859,59 @@ function initSuds(){
   });
   renderSuds();
 }
+
+/* ============ guided pace ============ */
+const pacer={raf:null,speed:14,active:null,paused:false,last:undefined,acc:0};
+function paceLabel(){
+  return pacer.speed<=9?"very slow":pacer.speed<=15?"slow":pacer.speed<=23?"steady":"brisk";
+}
+function updatePacerUI(){
+  document.querySelectorAll(".pacer").forEach(p=>{
+    const on=pacer.active===p.dataset.s;
+    p.querySelector(".pace-toggle").textContent=on?(pacer.paused?"▶ Resume":"❚❚ Pause"):"▶ Start guided pace";
+    p.querySelector(".plabel").textContent="pace: "+paceLabel();
+  });
+}
+function stopPace(){
+  pacer.active=null;pacer.paused=false;pacer.last=undefined;pacer.acc=0;
+  if(pacer.raf){cancelAnimationFrame(pacer.raf);pacer.raf=null;}
+  updatePacerUI();
+}
+function stepPace(ts){
+  if(!pacer.active){pacer.raf=null;return;}
+  if(pacer.paused||pacer.last===undefined){pacer.last=ts;pacer.raf=requestAnimationFrame(stepPace);return;}
+  const dt=Math.min(ts-pacer.last,60);pacer.last=ts;
+  pacer.acc+=pacer.speed*dt/1000;
+  const px=Math.floor(pacer.acc);
+  if(px>=1){window.scrollBy(0,px);pacer.acc-=px;}
+  const d=document.getElementById("script-"+pacer.active);
+  const doc=document.documentElement;
+  const atDocEnd=window.innerHeight+window.scrollY>=doc.scrollHeight-2;
+  if((d&&d.getBoundingClientRect().bottom<=window.innerHeight-40)||atDocEnd){stopPace();return;}
+  pacer.raf=requestAnimationFrame(stepPace);
+}
+document.querySelectorAll(".pacer").forEach(p=>{
+  const sid=p.dataset.s;
+  p.querySelector(".pace-toggle").addEventListener("click",()=>{
+    if(pacer.active===sid){pacer.paused=!pacer.paused;pacer.last=undefined;pacer.acc=0;}
+    else{
+      const d=document.getElementById("script-"+sid);
+      if(d&&!d.open)d.open=true;
+      pacer.active=sid;pacer.paused=false;pacer.last=undefined;pacer.acc=0;
+      if(!pacer.raf)pacer.raf=requestAnimationFrame(stepPace);
+    }
+    updatePacerUI();
+  });
+  p.querySelector(".pace-slower").addEventListener("click",()=>{pacer.speed=Math.max(5,Math.round(pacer.speed*0.72));updatePacerUI();});
+  p.querySelector(".pace-faster").addEventListener("click",()=>{pacer.speed=Math.min(40,Math.round(pacer.speed/0.72));updatePacerUI();});
+});
+["wheel","touchmove"].forEach(ev=>{
+  window.addEventListener(ev,e=>{
+    if(e.target&&e.target.closest&&e.target.closest(".pacer"))return;
+    if(pacer.active&&!pacer.paused){pacer.paused=true;updatePacerUI();}
+  },{passive:true});
+});
+updatePacerUI();
 
 /* ============ wins ============ */
 let winLog=[];
